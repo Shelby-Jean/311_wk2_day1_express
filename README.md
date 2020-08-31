@@ -17,7 +17,7 @@ Use Postman to test the routes created in the following sections. Your base url 
 
 * Create the following routes:
 
-  * GET /users
+  * GET /users/1
     * Give your server the ability to respond to a GET request with a path "/users" and return the users array from state.js
     * Ex. `res.json(users)`
 
