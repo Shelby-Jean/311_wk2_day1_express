@@ -6,6 +6,8 @@ const port = process.env.PORT || 5500;
 
 const { users } = require('./state');
 
+app.use(bodyParser.json());
+
 /* BEGIN - create routes here */
 
 //GET /users
@@ -14,32 +16,46 @@ app.get('/users', (req, res)=> {
 });
 
 //GET /users/1
-app.get('/users/1', (req, res) => {
-  res.json(users.filter(user => user._id == 1));
+app.get('/users/:userId', (req, res) => {
+  let person = users.filter(user => user._id === parseInt(req.params.userId));
+  res.json(person);
 });
 
 //POST /users
 app.post('/users', (req, res) => {
-  const newUser = {
-    _id: 6,
-    name: "Chuck Bartowski",
-    occupation: "Spy",
-    avatar: "https://dvdbash.files.wordpress.com/2012/04/chuck_strahovski_lancaster_levi_baldwin_gomez_sahay_krinsky_mcpartlin_lawrence_dvdbash_072.jpg"
-  }
-  users.push(newUser);
+  // let counter = users.length + 1;
+
+  // const newUser = {
+  //   _id = counter,
+  //   name = req.body.name,
+  //   ocupation = req.body.ocupation,
+  //   avatar = req.body.avatar
+  // }
+
+  // users.push(newUser);
+  users.push(req.body);
   res.json(users);
 });
 
 //PUT /users/1
-app.put('/users/1', (req, res) => {
-  // const found = users.some(user => user.id === parseInt(req.params.id));
+app.put('/users/:userId', (req, res) => {
+  let person = users.filter(user => user._id === parseInt(req.params.userId));
 
-})
+  if(person){
+    users.forEach(user => {
+      if(user._id === parseInt(req.params.userId)){
+        user.name = req.body.name;
+        res.json(user);
+      }
+    })
+  }
+});
 
 //DELETE /users/1
-app.delete('/users/1', (req, res) => {
-  // res.json(users.filter(user => user._id == 1));
-  res.send('deleted');
+app.delete('/users/:userId', (req, res) => {
+  let person = users.filter(user => user._id === parseInt(req.params.userId));
+  res.json(person);
+  res.send("deleted");
 })
 
 /* END - create routes here */
