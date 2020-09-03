@@ -26,15 +26,13 @@ app.get('/users/:userId', (req, res) => {
 
 //POST /users
 app.post('/users', (req, res) => {
-  let counter = users.length + 1;
-  let newUser = req.body;
-  newUser._id = counter;
-  // newUser = {
-  //   _id = counter,
-  //   name = req.body.name,
-  //   ocupation = req.body.ocupation,
-  //   avatar = req.body.avatar
-  // }
+  const counter = users.length + 1;
+  const newUser = {
+    _id: counter,
+    name: req.body.name,
+    ocupation: req.body.ocupation,
+    avatar: req.body.avatar
+  }
 
   users.push(newUser);
   res.json(users);
